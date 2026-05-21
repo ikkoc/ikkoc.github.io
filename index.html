@@ -868,9 +868,9 @@ PyTorch 版：直接可用于训练和推理。
                     <div class="home-article-content markdown-body">
                         
                             
-                            特性1）PagedAttention把 KV Cache 按 block&#x2F;page 管理，而不是给每个请求预留一整段连续显存，减少碎片，提高显存利用率。 ￼
+                            特性1）PagedAttention把 KV Cache 按 block/page 管理，而不是给每个请求预留一整段连续显存，减少碎片，提高显存利用率。 ￼
 2）Continuous batching不是等一批请求凑齐再跑，而是在每个 decode step 动态加入新请求、移除完成请求，让 GPU 一直尽量满载。 ￼
-3）Automatic Prefix Caching相同前缀 ...
+3）Automatic Prefix Caching相同前缀 promp...
                         
                     </div>
 
@@ -950,10 +950,8 @@ PyTorch 版：直接可用于训练和推理。
                     <div class="home-article-content markdown-body">
                         
                             
-                             构造函数初始化列表与构造函数体内赋值的区别
-先看两种写法：
-class A {public:    A(int x) : a(x) {}   &#x2F;&#x2F; 初始化列表private:    int a;};
-class A {public:    A(int x) {        a &#x3D; x;           &#x2F;&#x2F; 构造函数体内赋值    }...
+                            构造函数初始化列表与构造函数体内赋值的区别先看两种写法：
+123456789101112131415class A &#123;public:    A(int x) : a(x) &#123;&#125;   // 初始化列表private:    int a;&#125;;class A &#123;public:    A(int x) &#123;        a = x;    ...
                         
                     </div>
 
@@ -1246,7 +1244,7 @@ SM ...
                     </span>
                     
                         <span>
-                            129.3k words in total
+                            130.8k words in total
                         </span>
                     
                 </p>

@@ -146,7 +146,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://ikko-debug.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2026-03-30T16:07:25.000Z">
-<meta property="article:modified_time" content="2026-04-25T14:00:05.543Z">
+<meta property="article:modified_time" content="2026-05-20T15:15:59.900Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://ikko-debug.github.io/images/redefine-og.webp">
@@ -214,7 +214,119 @@
     
     
     
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -572,8 +684,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2026-04-25 22:05</span>
-            <span class="mobile">2026-04-25 22:05</span>
+            <span class="desktop">2026-05-20 23:15:59</span>
+            <span class="mobile">2026-05-20 23:15:59</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -584,7 +696,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>537 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>523 Words</span>
         </span>
     
     
@@ -608,16 +720,16 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>1）PagedAttention<br>把 KV Cache 按 block&#x2F;page 管理，而不是给每个请求预留一整段连续显存，减少碎片，提高显存利用率。 ￼</p>
+			<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>1）PagedAttention<br>把 KV Cache 按 block/page 管理，而不是给每个请求预留一整段连续显存，减少碎片，提高显存利用率。 ￼</p>
 <p>2）Continuous batching<br>不是等一批请求凑齐再跑，而是在每个 decode step 动态加入新请求、移除完成请求，让 GPU 一直尽量满载。 ￼</p>
 <p>3）Automatic Prefix Caching<br>相同前缀 prompt 的 KV Cache 可以复用，避免重复 prefill，尤其适合系统提示词相同、RAG 模板相同、多轮对话共前缀的场景。 ￼</p>
-<p>4）Chunked Prefill<br>把长 prompt 的 prefill 切成小块，与 decode 请求一起调度，改善 TTFT &#x2F; ITL 和 GPU 利用率之间的平衡。官方文档也明确说它能把 compute-bound 的 prefill 和 memory-bound 的 decode 更好地混合调度。 ￼</p>
+<p>4）Chunked Prefill<br>把长 prompt 的 prefill 切成小块，与 decode 请求一起调度，改善 TTFT / ITL 和 GPU 利用率之间的平衡。官方文档也明确说它能把 compute-bound 的 prefill 和 memory-bound 的 decode 更好地混合调度。 ￼</p>
 <p>5）Speculative Decoding<br>用 draft model 或其他机制先猜 token，再由目标模型验证，以降低生成延迟。 ￼</p>
-<p>6）高性能执行优化<br>支持 CUDA&#x2F;HIP graph，集成 FlashAttention &#x2F; FlashInfer，并支持 GPTQ、AWQ、INT4、INT8、FP8 等量化。 ￼</p>
-<p>7）工程特性<br>OpenAI-compatible API server、流式输出、多种并行方式（tensor&#x2F;pipeline&#x2F;data&#x2F;expert parallelism）、Multi-LoRA、多硬件支持。 ￼</p>
+<p>6）高性能执行优化<br>支持 CUDA/HIP graph，集成 FlashAttention / FlashInfer，并支持 GPTQ、AWQ、INT4、INT8、FP8 等量化。 ￼</p>
+<p>7）工程特性<br>OpenAI-compatible API server、流式输出、多种并行方式（tensor/pipeline/data/expert parallelism）、Multi-LoRA、多硬件支持。 ￼</p>
 <h2 id="KV-Cache-的大小如何计算？"><a href="#KV-Cache-的大小如何计算？" class="headerlink" title="KV Cache 的大小如何计算？"></a>KV Cache 的大小如何计算？</h2><p>对单层来说，KV Cache 大小约为：</p>
 <h1 id="text-KV-bytes-per-layer"><a href="#text-KV-bytes-per-layer" class="headerlink" title="\text{KV bytes per layer}"></a>\text{KV bytes per layer}</h1><p>2 \times B \times S \times H_{kv} \times D \times \text{dtype_bytes}</p>
-<p>其中：<br>    •	2：因为有 K 和 V<br>    •	B：batch size &#x2F; 活跃序列数<br>    •	S：每个序列当前缓存的 token 数<br>    •	H_kv：KV 头数<br>    •	D：每个 head 的维度<br>    •	dtype_bytes：数据类型字节数，比如 FP16&#x2F;BF16 是 2 字节</p>
+<p>其中：<br>    •	2：因为有 K 和 V<br>    •	B：batch size / 活跃序列数<br>    •	S：每个序列当前缓存的 token 数<br>    •	H_kv：KV 头数<br>    •	D：每个 head 的维度<br>    •	dtype_bytes：数据类型字节数，比如 FP16/BF16 是 2 字节</p>
 <p>如果有 L 层，则总大小：</p>
 <h1 id="text-Total-KV-bytes"><a href="#text-Total-KV-bytes" class="headerlink" title="\text{Total KV bytes}"></a>\text{Total KV bytes}</h1><p>2 \times B \times S \times L \times H_{kv} \times D \times \text{dtype_bytes}</p>
 <p>⸻</p>
@@ -627,15 +739,15 @@
 <p>2 \times H_{kv} \times D \times \text{dtype_bytes}</p>
 <p>再乘序列长度 S，再乘层数 L，再乘 batch B。</p>
 <p>⸻</p>
-<p>在 MHA &#x2F; GQA &#x2F; MQA 下的区别</p>
+<p>在 MHA / GQA / MQA 下的区别</p>
 <p>1）MHA<br>如果是普通 Multi-Head Attention：</p>
-<p>H_{kv} &#x3D; H_q</p>
-<p>即 K&#x2F;V 头数和 Query 头数一样。</p>
+<p>H_{kv} = H_q</p>
+<p>即 K/V 头数和 Query 头数一样。</p>
 <p>2）GQA<br>Grouped Query Attention：</p>
 <p>H_{kv} &lt; H_q</p>
 <p>KV 头数更少，所以 KV Cache 显著下降。</p>
 <p>3）MQA<br>Multi-Query Attention：</p>
-<p>H_{kv} &#x3D; 1</p>
+<p>H_{kv} = 1</p>
 <p>KV Cache 最省。</p>
 
 		</div>
@@ -651,7 +763,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2026-04-25 22:00:05
+                    :</strong> 2026-05-20 23:15:59
             </li>
         
         <li>
@@ -807,7 +919,7 @@
                     </span>
                     
                         <span>
-                            129.3k words in total
+                            130.8k words in total
                         </span>
                     
                 </p>
